@@ -1,0 +1,229 @@
+@use 'vars';
+
+:root {
+  --white-color: #{vars.$white-color};
+  --black-color: #{vars.$black-color};
+  --gray-color: #{vars.$gray-color};
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+*, ::before, ::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--gray-color);
+  color: var(--white-color);
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 12vh;
+  padding: 0 2rem;
+  background-color: var(--black-color);
+
+  &__nav {
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  &__logo {
+    cursor: pointer;
+  }
+}
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0 2rem;
+
+  &__add {
+    // display: none;
+    position: relative;
+    top: 125px;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    transform: rotate(45deg);
+    border: 5px solid var(--black-color);
+    border-radius: 5px;
+    cursor: pointer;
+  
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 4px;
+      height: 15px;
+      transform: translate(-50%) translateY(-50%) rotate(45deg);
+      background-color: var(--black-color);
+    }
+  
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 4px;
+      height: 15px;
+      transform: translate(-50%) translateY(-50%) rotate(130deg);
+      background-color: var(--black-color);
+    }
+  
+    &:hover {
+      border-color: var(--white-color);
+    }
+  
+    &:hover {
+      &::before,
+      &::after {
+        background-color: var(--white-color);
+      }
+    }
+  }
+
+  &__form {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.636);
+
+    &.active {
+      display: flex;
+    }
+  }
+
+  &__books {
+    position: relative;
+    top: 25vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 2rem;
+    margin: 0 auto;
+    padding-bottom: 1rem;
+    width: 100%;
+    max-width: 1200px;
+    border-radius: 20px;
+  }
+
+  &__book {
+    display: grid;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1rem;
+    min-width: 300px;
+    height: max-content;
+    padding: 1.5rem;
+    border-radius: 10px;
+    background-color: var(--black-color);
+    color: var(--white-color);
+    font-size: 1.2rem;
+  }
+
+  &__btns {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+
+    & > a {
+      width: 100%;
+      padding: .5rem 1rem;
+      border-radius: 10px;
+      background-color: var(--gray-color);
+      font-size: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  max-width: 350px;
+  padding: 2rem;
+  border-radius: 20px;
+  background-color: var(--gray-color);
+
+  &__subtitle {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.4rem;
+
+    & input {
+      padding: .8rem .6rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: bold;
+      outline: none;
+    }
+  }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    margin-top: .5rem;
+    margin-bottom: 1.5rem;
+
+    & input {
+      width: 20px;
+      height: 20px;
+      margin-left: 2rem;
+    }
+  }
+
+  &__btn {
+    height: 45px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--white-color);
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .header__nav {
+    // padding-left: 2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .container {
+    padding: 0 .5rem;
+  }
+}
