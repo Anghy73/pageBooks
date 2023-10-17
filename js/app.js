@@ -7,20 +7,20 @@ const templateBook = document.getElementById("templateBook");
 const fragment = document.createDocumentFragment();
 
 const bookList = [
-  {
-    id: Date.now(),
-    title: "The Hobbit",
-    author: "J.R.R. Tolkien",
-    pages: 100,
-    read: true,
-  },
-  {
-    id: Date.now() + 100,
-    title: "The Hobbit 2",
-    author: "J.R.R. Tolkien",
-    pages: 150,
-    read: false,
-  },
+  // {
+  //   id: Date.now(),
+  //   title: "The Hobbit",
+  //   author: "J.R.R. Tolkien",
+  //   pages: 100,
+  //   read: true,
+  // },
+  // {
+  //   id: Date.now() + 100,
+  //   title: "The Hobbit 2",
+  //   author: "J.R.R. Tolkien",
+  //   pages: 150,
+  //   read: false,
+  // },
 ];
 
 function Book(title, author, pages, read) {
@@ -32,10 +32,20 @@ function Book(title, author, pages, read) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  if (bookList.length === 0) return;
+  if (bookList.length === 0) {
+    addBook.classList.add('active')
+  };
 
   showBooks(bookList);
 });
+
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('container__delete')) {
+    if (bookList.length === 0) {
+      addBook.classList.add('active')
+    }
+  }
+})
 
 function showBooks(list) {
   containerBooks.innerHTML = "";
@@ -86,7 +96,6 @@ function showBooks(list) {
 
       bookList.forEach((book, index) => {
         if (book.id === parseInt(parent)) {
-          console.log("si");
           bookList.splice(index, 1);
         }
       });
@@ -120,6 +129,7 @@ form.addEventListener("submit", (e) => {
   let read = form.querySelector(".form__read").checked;
 
   containerForm.classList.remove("active");
+  addBook.classList.remove('active')
   form.reset();
   addBookToLibrary(title, author, pages, read);
   showBooks(bookList);
