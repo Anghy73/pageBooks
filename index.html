@@ -40,16 +40,16 @@
         <h2 class="form__subtitle">Add New Book</h2>
 
         <div class="form__content">
-          <input class="form__title" type="text" placeholder="Title">
-          <input class="form__author" type="text" placeholder="Author">
-          <input class="form__pages" type="number" placeholder="Pages">
+          <input class="form__title" type="text" placeholder="Title" required maxlength="100">
+          <input class="form__author" type="text" placeholder="Author" required maxlength="100">
+          <input class="form__pages" type="number" placeholder="Pages" required max="1000">
           <div class="form__label">
             Have you read it?
             <input class="form__read" type="checkbox">
           </div>
         </div>
 
-        <button class="form__btn" type="button">Create</button>
+        <button class="form__btn" type="submit">Create</button>
       </form>
     </div>
 

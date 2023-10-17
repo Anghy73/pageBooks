@@ -1,8 +1,8 @@
 const app = document.querySelector(".container");
 const addBook = document.querySelector('.container__add')
 const containerForm = document.querySelector('.container__form')
-// const createBook = document.querySelector('.form__btn')
 const containerBooks = document.querySelector('.container__books');
+const divError = document.querySelector('.divError');
 const date = new Date();
 
 const bookList = [
@@ -42,12 +42,12 @@ document.addEventListener("DOMContentLoaded", () => {
 function showBooks(list) {
 
   containerBooks.innerHTML = ''
-  let readStatus = 'Read'
 
   list.forEach(book => {
-    if (book.read === false) {
-      readStatus = 'Not read'
-    }
+    const readStatus = book.read ? 'Read' : 'Not Read';
+
+    // TODO: usar templates fragment cloneNode
+
     containerBooks.innerHTML += `
       <div class="container__book">
         <h2>${book.title}</h2>
@@ -62,33 +62,36 @@ function showBooks(list) {
   });
 }
 
-
 addBook.addEventListener('click', () => {
   containerForm.classList.add('active')
 })
 
-containerForm.addEventListener('click', (e) => {
+containerForm.querySelector('.form').addEventListener('submit', (e) => {
+  e.preventDefault()
+})
 
+containerForm.addEventListener('click', (e) => {
   let title = containerForm.querySelector('.form__title').value;
   let author = containerForm.querySelector('.form__author').value;
   let pages = containerForm.querySelector('.form__pages').value;
   let read = containerForm.querySelector('.form__read');
+
   let status = false
-  if (e.target.classList.contains('form__btn')) {
+
+  if (e.target === containerForm) {
     containerForm.classList.remove('active')
+  }
 
-    console.log(title);
-    console.log(author);
-    console.log(pages);
-    if (read.checked) {
-      status = true
-    }
+  if (e.target.classList.contains('form__btn')) {
 
-    addBookToLibrary(title, author, pages, status)
-    showBooks(bookList);
+    if (read.checked) {status = true}
     
-
-
+    if (title.trim().length >= 1 && author.trim().length >= 1 && pages >= 1) {
+      containerForm.classList.remove('active')
+      addBookToLibrary(title, author, pages, status)
+      showBooks(bookList);
+      containerForm.querySelector('.form').reset()
+    }
   }
 })
 
