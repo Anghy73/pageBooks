@@ -1,8 +1,9 @@
 const app = document.querySelector(".container");
-const addBook = document.querySelector('.container__add')
-const containerForm = document.querySelector('.container__form')
-const containerBooks = document.querySelector('.container__books');
-const divError = document.querySelector('.divError');
+const addBook = document.querySelector(".container__add");
+const containerForm = document.querySelector(".container__form");
+const form = document.querySelector(".form");
+const containerBooks = document.querySelector(".container__books");
+const divError = document.querySelector(".divError");
 const date = new Date();
 
 const bookList = [
@@ -23,11 +24,11 @@ const bookList = [
 ];
 
 function Book(title, author, pages, read) {
-  this.id = date.getTime()
-  this.title = title
-  this.author = author
-  this.pages = pages
-  this.read = read
+  this.id = date.getTime();
+  this.title = title;
+  this.author = author;
+  this.pages = pages;
+  this.read = read;
   // this.info = function() {
   //   return `${this.id}, ${title}, ${author}, ${pages}, ${read}`
   // }
@@ -40,11 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function showBooks(list) {
+  containerBooks.innerHTML = "";
 
-  containerBooks.innerHTML = ''
-
-  list.forEach(book => {
-    const readStatus = book.read ? 'Read' : 'Not Read';
+  list.forEach((book) => {
+    const readStatus = book.read ? "Read" : "Not Read";
 
     // TODO: usar templates fragment cloneNode
 
@@ -58,44 +58,35 @@ function showBooks(list) {
             <a>Delete</a>
           </div>
       </div>
-    `
+    `;
   });
 }
 
-addBook.addEventListener('click', () => {
-  containerForm.classList.add('active')
-})
+addBook.addEventListener("click", () => {
+  containerForm.classList.add("active");
+});
 
-containerForm.querySelector('.form').addEventListener('submit', (e) => {
-  e.preventDefault()
-})
-
-containerForm.addEventListener('click', (e) => {
-  let title = containerForm.querySelector('.form__title').value;
-  let author = containerForm.querySelector('.form__author').value;
-  let pages = containerForm.querySelector('.form__pages').value;
-  let read = containerForm.querySelector('.form__read');
-
-  let status = false
-
+containerForm.addEventListener("click", (e) => {
   if (e.target === containerForm) {
-    containerForm.classList.remove('active')
+    e.stopPropagation();
+    containerForm.classList.remove("active");
+    form.reset();
   }
+});
 
-  if (e.target.classList.contains('form__btn')) {
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  let title = form.querySelector(".form__title").value;
+  let author = form.querySelector(".form__author").value;
+  let pages = form.querySelector(".form__pages").value;
+  let read = form.querySelector(".form__read").checked;
 
-    if (read.checked) {status = true}
-    
-    if (title.trim().length >= 1 && author.trim().length >= 1 && pages >= 1) {
-      containerForm.classList.remove('active')
-      addBookToLibrary(title, author, pages, status)
-      showBooks(bookList);
-      containerForm.querySelector('.form').reset()
-    }
-  }
-})
-
+  containerForm.classList.remove("active");
+  form.reset();
+  addBookToLibrary(title, author, pages, read);
+  showBooks(bookList);
+});
 
 function addBookToLibrary(title, author, pages, read) {
-  bookList.push(new Book(title, author, pages, read))
+  bookList.push(new Book(title, author, pages, read));
 }
