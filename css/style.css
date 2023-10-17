@@ -104,6 +104,8 @@ body {
   top: 25vh;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  justify-content: center;
+  align-items: center;
   gap: 2rem;
   margin: 0 auto;
   padding-bottom: 1rem;
@@ -131,7 +133,7 @@ body {
   margin-top: 1rem;
   width: 100%;
 }
-.container__btns > a {
+.container__btns a {
   width: 100%;
   padding: 0.5rem 1rem;
   border-radius: 10px;
@@ -139,6 +141,12 @@ body {
   font-size: 1.5rem;
   text-align: center;
   cursor: pointer;
+}
+.container__delete {
+  background-color: rgb(156, 0, 0) !important;
+}
+.container__delete:hover {
+  background-color: red !important;
 }
 
 .form {
@@ -187,6 +195,20 @@ body {
 }
 .form__btn:hover {
   background-color: var(--white-color);
+}
+
+.readYes {
+  background-color: rgba(172, 255, 47, 0.3) !important;
+}
+.readYes:hover {
+  background-color: rgba(172, 255, 47, 0.7) !important;
+}
+
+.readNo {
+  background-color: rgba(0, 0, 255, 0.3) !important;
+}
+.readNo:hover {
+  background-color: rgba(0, 0, 255, 0.7) !important;
 }
 
 @media (max-width: 400px) {

@@ -22,15 +22,6 @@
 
     
     <div class="container__books">
-      <!-- <div class="container__book">
-        <h2>The Hobbit</h2>
-        <p>Andy. J.R.R</p>
-        <p>100 pages</p>
-        <div class="container__btns">
-          <a>Not read</a>
-          <a>Delete</a>
-        </div>
-      </div> -->
     </div>
 
     
@@ -54,5 +45,17 @@
     </div>
 
   </main>
+
+  <template id="templateBook">
+    <div class="container__book" data-id="">
+      <h2 class="container__title"></h2>
+      <p class="container__author"></p>
+      <p class="container__pages"></p>
+      <div class="container__btns">
+        <a class="container__read">Not read</a>
+        <a class="container__delete">Delete</a>
+      </div>
+    </div>
+  </template>
 </body>
 </html>

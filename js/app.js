@@ -3,19 +3,20 @@ const addBook = document.querySelector(".container__add");
 const containerForm = document.querySelector(".container__form");
 const form = document.querySelector(".form");
 const containerBooks = document.querySelector(".container__books");
-const divError = document.querySelector(".divError");
-const date = new Date();
+const templateBook = document.getElementById('templateBook');
+const fragment = document.createDocumentFragment();
+let date = new Date();
 
 const bookList = [
   {
-    id: date.getTime(),
+    id: Date.now(),
     title: "The Hobbit",
     author: "J.R.R. Tolkien",
     pages: 100,
     read: true,
   },
   {
-    id: date.getTime(),
+    id: Date.now() + 100,
     title: "The Hobbit 2",
     author: "J.R.R. Tolkien",
     pages: 150,
@@ -24,14 +25,11 @@ const bookList = [
 ];
 
 function Book(title, author, pages, read) {
-  this.id = date.getTime();
+  this.id = Date.now();
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
-  // this.info = function() {
-  //   return `${this.id}, ${title}, ${author}, ${pages}, ${read}`
-  // }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -46,20 +44,54 @@ function showBooks(list) {
   list.forEach((book) => {
     const readStatus = book.read ? "Read" : "Not Read";
 
-    // TODO: usar templates fragment cloneNode
+    const clone = templateBook.content.cloneNode(true)
 
-    containerBooks.innerHTML += `
-      <div class="container__book">
-        <h2>${book.title}</h2>
-        <p>${book.author}</p>
-        <p>${book.pages} pages</p>
-          <div class="container__btns">
-            <a>${readStatus}</a>
-            <a>Delete</a>
-          </div>
-      </div>
-    `;
+    clone.querySelector('.container__book').setAttribute('data-id', book.id)
+
+    clone.querySelector('.container__title').textContent = book.title;
+    clone.querySelector('.container__author').textContent = book.author;
+    clone.querySelector('.container__pages').textContent = `${book.pages} pages`;
+    let read = clone.querySelector('.container__read')
+    read.textContent = readStatus;
+
+    if (read.textContent === 'Read') {
+      read.classList.add('readYes')
+    } else {
+      read.classList.add('readNo')
+    }
+
+    clone.querySelector('.container__read').addEventListener('click', (e) => {
+      console.log('si');
+      console.log(book.read);
+      let parent = e.target.parentElement.parentElement.getAttribute('data-id');
+
+      bookList.forEach(book => {
+        if (book.id === parseInt(parent)) {
+          if (book.read) {
+            read.classList.remove('readYes')
+            read.classList.add('readNo')
+            read.textContent = 'Not Read'
+            book.read = false
+            console.log(bookList);
+          } else {
+            read.classList.remove('readNo')
+            read.classList.add('readYes')
+            read.textContent = 'Read'
+            book.read = true
+            console.log(bookList);
+          }
+        }
+      });
+
+    })
+    clone.querySelector('.container__delete').addEventListener('click', () => {
+      console.log('holas');
+    })
+
+    fragment.appendChild(clone)
   });
+
+  containerBooks.appendChild(fragment)
 }
 
 addBook.addEventListener("click", () => {
